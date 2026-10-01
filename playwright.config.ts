@@ -23,8 +23,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html'],
-    ['@muuktest/amikoo-reporter', { key: process.env.AMIKOO_KEY ?? '0g1ywn32tkctqsazgm93ieo-ixbnygrzkcibbd9cd8xqzd-btu2raj5n89sockgoehej-d4ahtlfaqqggm7gwiu9lgb' }],
+    ['@muuktest/amikoo-reporter'],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

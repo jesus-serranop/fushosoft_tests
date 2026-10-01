@@ -15,12 +15,7 @@ export class LoginPage {
 
   /** Navigate to the app's login page. */
   async goto() {
-    await this.page.goto('/login');
-  }
-
-  /** Click the "Iniciar sesión" button to be redirected to Auth0. */
-  async clickIniciarSesion() {
-    await this.page.getByRole('button', { name: /iniciar sesión/i }).click();
+    await this.page.goto('/');
   }
 
   // ── Auth0 Universal Login form ──────────────────────────────────────────────
@@ -49,10 +44,6 @@ export class LoginPage {
    */
   async loginAs(email: string, password: string) {
     await this.goto();
-    await this.clickIniciarSesion();
-
-    // Wait for Auth0 domain to load
-    await this.page.waitForURL(/auth0\.com/);
 
     await this.fillEmail(email);
     await this.submitAuth0Form(); // Auth0 email-first step
