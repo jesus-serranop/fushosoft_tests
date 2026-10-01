@@ -22,11 +22,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['@muuktest/amikoo-reporter', { key: process.env.AMIKOO_KEY ?? '0g1ywn32tkctqsazgm93ieo-ixbnygrzkcibbd9cd8xqzd-btu2raj5n89sockgoehej-d4ahtlfaqqggm7gwiu9lgb' }],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://admin.fushosoft.com.mx',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
