@@ -22,12 +22,13 @@ export class LoginPage {
 
   /** Fill in the email field on the Auth0 login form. */
   async fillEmail(email: string) {
-    await this.page.getByLabel(/email/i).fill(email);
+    //await this.page.getByLabel(/email/i).fill(email);
+    await this.page.locator('#username').fill(email);
   }
 
   /** Fill in the password field on the Auth0 login form. */
   async fillPassword(password: string) {
-    await this.page.getByLabel(/password/i).fill(password);
+    await this.page.locator('#password').fill(password);
   }
 
   /** Click the continue / submit button on the Auth0 form. */
