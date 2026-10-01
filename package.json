@@ -8,8 +8,9 @@
     "test:report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.47.0",
     "@muuktest/amikoo-reporter": "latest",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.3",
     "dotenv": "^16.4.5"
   }
 }
