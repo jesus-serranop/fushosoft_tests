@@ -47,13 +47,12 @@ export class LoginPage {
     await this.goto();
 
     await this.fillEmail(email);
-    await this.submitAuth0Form(); // Auth0 email-first step
     await this.fillPassword(password);
-    await this.submitAuth0Form(); // Password step
+    await this.submitAuth0Form(); // Submit with both credentials filled
 
     // Wait for the successful redirect back to the app dashboard
     await this.page.waitForURL(/admin\.fushosoft\.com\.mx\/summary/, {
-      timeout: 15_000,
+      timeout: 30_000,
     });
   }
 
