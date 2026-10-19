@@ -33,8 +33,11 @@ export class LoginPage {
 
   /** Click the continue / submit button on the Auth0 form. */
   async submitAuth0Form() {
-    // Auth0 standard flow uses a "Continue" button
-    await this.page.getByRole('button', { name: /continue/i }).click();
+    // Target by type and data attribute — more reliable than button text
+    // which can vary by locale or Auth0 theme.
+    await this.page
+      .locator('button[type="submit"][data-action-button-primary="true"]')
+      .click();
   }
 
   // ── Convenience ────────────────────────────────────────────────────────────
