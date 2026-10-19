@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/LoginPage';
 
-const EMAIL = process.env.TEST_USER_EMAIL ?? 'fushosoft16+testing2@gmail.com';
-const PASSWORD = process.env.TEST_USER_PASSWORD;
-if (!PASSWORD) {
+const EMAIL = process.env.ADMIN_USER;
+const PASSWORD = process.env.ADMIN_PASSWORD;
+if (!EMAIL || !PASSWORD) {
   throw new Error(
-    'TEST_USER_PASSWORD environment variable must be set to run login tests.',
+    'ADMIN_USER and ADMIN_PASSWORD environment variables must be set to run login tests.',
   );
 }
 
