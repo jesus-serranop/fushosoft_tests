@@ -2,7 +2,12 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/LoginPage';
 
 const EMAIL = process.env.TEST_USER_EMAIL ?? 'fushosoft16+testing2@gmail.com';
-const PASSWORD = process.env.TEST_USER_PASSWORD ?? '';
+const PASSWORD = process.env.TEST_USER_PASSWORD;
+if (!PASSWORD) {
+  throw new Error(
+    'TEST_USER_PASSWORD environment variable must be set to run login tests.',
+  );
+}
 
 test.describe('Login', () => {
   test('login page shows the "Iniciar sesión" button', async ({ page }) => {
