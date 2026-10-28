@@ -3,13 +3,14 @@ import { LoginPage } from './pages/LoginPage';
 
 const EMAIL = process.env.ADMIN_USER;
 const PASSWORD = process.env.ADMIN_PASSWORD;
-if (!EMAIL || !PASSWORD) {
-  throw new Error(
-    'ADMIN_USER and ADMIN_PASSWORD environment variables must be set to run login tests.',
-  );
-}
 
 test.describe('Login', () => {
+  test.beforeEach(async () => {
+    if (!EMAIL || !PASSWORD) {
+      test.skip(true, 'ADMIN_USER and ADMIN_PASSWORD environment variables must be set to run login tests.');
+    }
+  });
+
   test('login page shows the "Iniciar sesión" button', async ({ page }) => {
     // Verifies that the app login page loads and presents the Auth0 redirect button
     const loginPage = new LoginPage(page);
@@ -20,14 +21,14 @@ test.describe('Login', () => {
   test('successful login redirects to the dashboard', async ({ page }) => {
     // Full happy path: click the app button → Auth0 form → redirect to /summary
     const loginPage = new LoginPage(page);
-    await loginPage.loginAs(EMAIL, PASSWORD);
+    await loginPage.loginAs(EMAIL!, PASSWORD!);
     await loginPage.expectDashboardVisible();
   });
 
   test('dashboard summary cards are visible after login', async ({ page }) => {
     // After logging in, the Home page must show the key summary metrics
     const loginPage = new LoginPage(page);
-    await loginPage.loginAs(EMAIL, PASSWORD);
+    await loginPage.loginAs(EMAIL!, PASSWORD!);
 
     // Expect the two main summary tabs to be visible
     await expect(page.getByText(/juegos del día/i)).toBeVisible();
@@ -39,7 +40,7 @@ test.describe('Login', () => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
 
-    await loginPage.fillEmail(EMAIL);
+    await loginPage.fillEmail(EMAIL!);
     await loginPage.submitAuth0Form();
     await loginPage.fillPassword('WrongPassword!999');
     await loginPage.submitAuth0Form();
