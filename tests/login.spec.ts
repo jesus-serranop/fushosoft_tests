@@ -50,7 +50,9 @@ test.describe('Login', () => {
   test('unauthenticated user is redirected to login', async ({ page }) => {
     // Accessing a protected route without a session should redirect to login
     await page.goto('/summary');
-    // Auth guard redirects either to /login or to Auth0
-    await expect(page).toHaveURL(/login|auth0\.com/);
+    // Auth guard redirects either to /login or to Auth0. The SPA has to boot and
+    // initialise the Auth0 client before the guard calls loginWithRedirect, so give
+    // the redirect more time than the default 5s expect timeout.
+    await expect(page).toHaveURL(/login|auth0\.com/, { timeout: 30_000 });
   });
 });
