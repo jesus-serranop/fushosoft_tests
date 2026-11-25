@@ -30,8 +30,15 @@ test.describe('Login', () => {
     await loginPage.loginAs(EMAIL, PASSWORD);
 
     // Expect the two main summary tabs to be visible
-    await expect(page.getByText(/juegos del día/i)).toBeVisible();
-    await expect(page.getByText(/jugadores suspendidos/i)).toBeVisible();
+    // Scope to the summary cards (.card-label): the same text also appears in the
+    // "Juegos del día" / "Jugadores suspendidos" accordion titles, which caused a
+    // strict-mode violation with a bare getByText.
+    await expect(
+      page.locator('.card-label').filter({ hasText: /juegos del día/i }),
+    ).toBeVisible();
+    await expect(
+      page.locator('.card-label').filter({ hasText: /jugadores suspendidos/i }),
+    ).toBeVisible();
   });
 
   test('invalid credentials show an error on Auth0', async ({ page }) => {
