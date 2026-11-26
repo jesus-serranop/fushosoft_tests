@@ -2,8 +2,12 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/LoginPage';
 import { SummaryPage } from './pages/SummaryPage';
 
-const EMAIL = process.env.TEST_USER_EMAIL ?? 'fushosoft16+testing2@gmail.com';
-const PASSWORD = process.env.TEST_USER_PASSWORD ?? '';
+// Credentials come from the project's existing ADMIN_USER / ADMIN_PASSWORD variables
+const EMAIL = process.env.ADMIN_USER;
+const PASSWORD = process.env.ADMIN_PASSWORD;
+if (!EMAIL || !PASSWORD) {
+  throw new Error('ADMIN_USER and ADMIN_PASSWORD must be set');
+}
 
 test.describe('Summary Dashboard', () => {
   // Log in once before each test and land on /summary
