@@ -43,10 +43,16 @@ test.describe('Summary Dashboard', () => {
     await summaryPage.expectChartsVisible();
   });
 
-  test('unauthenticated access to /summary redirects to login', async ({ page }) => {
-    // Accessing the protected route directly without a session should redirect to auth
-    await page.context().clearCookies();
-    await page.goto('/summary');
-    await expect(page).toHaveURL(/login|auth0\.com/);
+  test('unauthenticated access to /summary redirects to login', async ({ browser }) => {
+    // Accessing the protected route directly without a session should redirect to auth.
+    // Use a fresh context so no cookies or web storage (localStorage/sessionStorage) from the login persist.
+    const context = await browser.newContext({
+      baseURL: test.info().project.use.baseURL,
+      storageState: { cookies: [], origins: [] },
+    });
+    const freshPage = await context.newPage();
+    await freshPage.goto('/summary');
+    await expect(freshPage).toHaveURL(/login|auth0\.com/);
+    await context.close();
   });
 });
